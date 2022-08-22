@@ -96,11 +96,10 @@ header{
 }
 
 .choices > button:not(.active):hover{
-   background:  #dedede;
+   background:  #f4f4f4;
 }
 
 .active{
-    scale: 1.2;
     box-shadow: -1px 1px 8px -3px grey;
     font-weight: 600;
 }
@@ -109,6 +108,8 @@ header{
     width:90%;
     display:grid;
     grid-template-columns: repeat(3, 1fr);
+    background: radial-gradient(rgb(248 248 248)50%, white);
+    
 }
 
 .board > button{
@@ -117,9 +118,10 @@ header{
 
 /* FIELD || */
 .field{
-    border: 5px solid #444444;
+    border: 4px solid #444444;
     font-size: 2em; /* temporary */
-    background: rgb(248 248 248);
+    /* background: rgb(248 248 248); */
+    background:none;
 }
 
 .field:nth-child(-n + 3) {
@@ -139,11 +141,11 @@ header{
 }
 
 .field:not(.disabled):hover {
-    background: #dedede;
+    background: #e2e2e2;
 }
 
 /* RESTART */
-.restart{
+#restart{
     font-size: 1.2em;
     width:100%;
     background:  white;
