@@ -1,4 +1,5 @@
-const game = (()=>{
+
+    let board = [0,1,2,3,4,5,6,7,8];
     const human = {
         mark:"x",
         state:[]
@@ -49,7 +50,9 @@ const displayController = (()=>{
         if(!disabled){
             human.state.push(target.dataset.value)
             target.classList.add('disabled')
-            target.classList.add(human.mark ? 'x' : 'o')
+            target.classList.add(human.mark=="x" ? "x" : "o")
+            console.log(target.dataset.value)
+            board[target.dataset.value] = human.mark
             // computerMove(); // TODO
         }
     }
@@ -112,9 +115,15 @@ const inputController = (()=>{
     })
     xMark.addEventListener("click",event => {
         displayController.xMark(event.target)
+        displayController.restart()
+        human.state = [];
+        computer.state = [];
     })
     oMark.addEventListener("click",event => {
         displayController.oMark(event.target)
+        displayController.restart()
+        human.state = [];
+        computer.state = [];
     })
     restart.addEventListener("click",event => {
         displayController.restart()
@@ -123,5 +132,5 @@ const inputController = (()=>{
     })
 })()
 
-})()
+
 
