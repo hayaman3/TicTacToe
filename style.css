@@ -32,7 +32,6 @@ button{
 
 /* MODAL || */
 .modal{
-    display: none; 
     position: fixed;
     z-index: 1;
     left: 0;
@@ -42,7 +41,13 @@ button{
     overflow: auto;
     background-color: rgba(214, 214, 214, .95);
 }
-
+.visible{
+    display:flex
+}
+.none{
+    display:none
+}
+    
 .result{
     color: #444444;
     font-size: 3em;

@@ -44,6 +44,8 @@ const compareState = (()=>{
 })()
 
 const displayController = (()=>{
+    const modal = document.querySelector('.modal')
+    const result = document.querySelector(".result")
     // from inputController()
     const markBoard = (target) =>{
         const disabled = target.classList.contains('disabled')
@@ -51,9 +53,9 @@ const displayController = (()=>{
             human.state.push(target.dataset.value)
             target.classList.add('disabled')
             target.classList.add(human.mark=="x" ? "x" : "o")
-            console.log(target.dataset.value)
             board[target.dataset.value] = human.mark
-            // computerMove(); // TODO
+            //get computer move
+            computerMarkBoard(minimax(board, computer.mark).index)
         }
     }
     const xMark = (target) =>{
@@ -62,7 +64,6 @@ const displayController = (()=>{
             const oMark = document.getElementById("o-choice")
             oMark.classList.remove("active")
             target.classList.add("active")
-            human.mark = "x"
         }
     }
     const oMark = (target) =>{
@@ -71,7 +72,6 @@ const displayController = (()=>{
             const xMark = document.getElementById("x-choice")
             xMark.classList.remove("active")
             target.classList.add("active")
-            human.mark = "o"
         }
     }
     const restart = () =>{
@@ -79,18 +79,48 @@ const displayController = (()=>{
             field.classList.remove('disabled', 'x', 'o')
         })
     }
+    const modalControl = () =>{
+        // document.querySelectorAll(".field").forEach(field => {
+        //     field.classList.remove('disabled', 'x', 'o')
+        // })
+        console.log("modal")
+
+        // modal.style.display = "";
+        // modal.style.display = "none";
+        // result.textContent = ""
+        // modal.style.removeProperty("display")
+        modal.classList.remove("visible")
+        modal.classList.add("none")
+
+    }
     // from compareState.isThereAWinner()
     const humanWin = () =>{
-        console.log("human win: "+human.state)
+        // modal.style.display = "flex";
+        modal.classList.remove("none")
+        modal.classList.add("visible")
+        result.textContent = "YOU WIN!"
     }
     const computerWin = () =>{
-        console.log("computer win: "+computer.state)
+        // modal.style.display = "flex";
+        // modal.classList.remove("none")
+        // modal.classList.add("visible")
+        result.textContent = "YOU LOSE!"
     }
     const draw = () =>{
-        const modal = document.querySelector('.modal')// go higher scope when needed
-        const result = document.querySelector(".result")// go higher scope when needed
-        modal.style.display = "flex";
+        // modal.style.display = "flex";
+        modal.classList.remove("none")
+        modal.classList.add("visible")
         result.textContent = "DRAW!"
+    }
+    // from minimax
+    const computerMarkBoard = (index) =>{
+        if(!compareState.isThereAWinner()){
+            let field = document.getElementsByClassName("field")[index]
+            field.classList.add(computer.mark=="x" ? "x" : "o")
+            computer.state.push(field.dataset.value)
+            field.classList.add('disabled')
+            board[index] = computer.mark
+        }
     }
     return {
         markBoard,
@@ -99,7 +129,8 @@ const displayController = (()=>{
         restart,
         humanWin,
         computerWin,
-        draw
+        draw,
+        modalControl,
     }
 })()
 
@@ -108,6 +139,7 @@ const inputController = (()=>{
     const xMark = document.getElementById("x-choice")
     const oMark = document.getElementById("o-choice")
     const restart = document.getElementById("restart")
+    const modal = document.querySelector(".modal")
 
     const goDefault = (()=>{
         displayController.restart()
@@ -133,12 +165,14 @@ const inputController = (()=>{
         computer.mark = "x";
     })
     restart.addEventListener("click",event => {
-       goDefault();
+        goDefault();
+    })
+    modal.addEventListener("click",event => {
+        goDefault();
+        displayController.modalControl()
     })
 })()
 
-
-// minimax (board, computer.mark) // @56
 
 function minimax(newBoard, player){
 
@@ -184,10 +218,10 @@ function minimax(newBoard, player){
     if(player === computer.mark){
         let bestScore = -10000;
         for(let i = 0; i < moves.length; i++){
-        if(moves[i].score > bestScore){
-            bestScore = moves[i].score;
-            bestMove = i;
-        }
+            if(moves[i].score > bestScore){
+                bestScore = moves[i].score;
+                bestMove = i;
+            }
         }
     }else{
 
