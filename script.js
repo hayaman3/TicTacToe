@@ -95,15 +95,13 @@ const displayController = (()=>{
     }
     // from compareState.isThereAWinner()
     const humanWin = () =>{
-        // modal.style.display = "flex";
         modal.classList.remove("none")
         modal.classList.add("visible")
         result.textContent = "YOU WIN!"
     }
     const computerWin = () =>{
-        // modal.style.display = "flex";
-        // modal.classList.remove("none")
-        // modal.classList.add("visible")
+        modal.classList.remove("none")
+        modal.classList.add("visible")
         result.textContent = "YOU LOSE!"
     }
     const draw = () =>{
