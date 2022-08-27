@@ -160,7 +160,8 @@ header{
 
 /* CSS THAT HELPS JAVASCRIPT */
 .x::after {
-    content: '❌';
+    content: '×';
+    font-size: 50px;
 }
 
 .o::after {
